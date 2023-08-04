@@ -1,12 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <main>
+        <section class="my-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <h2 class="text-center my-4">Inscrivez-vous</h2>
+                        <form method="post">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-8 offset-2 text-center">
+                                        {% csrf_token %}
+    
+                                        {% for field in form %}
+                                            <p class="form-floating">
+                                                {{ field }}
+                                                <label for="floatingInput">{{field.label}}</label>
+                                            </p>
+                                            <div class="text-danger">
+                                                {{ field.errors }}
+                                            </div>
+                                                
+        
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="offset-7">
+                                <a class="btn btn-primary mx-5" href="{% url 'home' %}" role="button" >Retourner</a>
+                                <button type="submit" class="btn btn-primary">S’inscrire</button>
+                            </div>
+    
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
 
-<h2>Inscription</h2>
-
-<form method="post">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <button type="submit" >S’inscrire</button>
-</form>
-{% endblock %}
+{% endblock content %}

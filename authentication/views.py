@@ -24,18 +24,12 @@ class LoginPageView(View):
             if user is not None:
                 login(request, user)
                 return redirect('home')
-        message = 'Identifiants invalides.'
+        message = 'Identifiants invalides'
         return render(request, self.template_name, context={'form': form, 'message': message})
 
 def logout_user(request):
     logout(request)
     return redirect('login')
-
-def create_user(request):
-    form = CreateUserForm()
-    return render(request,
-        'authentication/user_create.html',
-        {'form': form})
 
 class CreateUserView(View):
     form_class = forms.CreateUserForm

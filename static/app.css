@@ -1,0 +1,13 @@
+.flex-container-login {
+    display:flex;
+    justify-content: center;
+    justify-content: space-evenly;
+
+}
+
+.flex-container-menu {
+    display:flex;
+    justify-content: center;
+    justify-content: space-evenly;
+
+}
