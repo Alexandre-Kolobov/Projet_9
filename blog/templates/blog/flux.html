@@ -4,19 +4,6 @@
 {% load blog_tools %}
 <main>
     <section>
-        <div class="container my-4">
-            <div class="row">
-                <div class="col-6 text-end">
-                    <a class="btn btn-primary" href="{% url 'ask_review' %}" role="button" >Demander une critique</a>
-                </div>
-                <div class="col-6">
-                    <a class="btn btn-primary" href="{% url 'view_create_ticket_and_review' %}" role="button" >Créer une critique</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section>
         {% for instance in tickets_and_reviews %}
             {% if instance|model_type == "Ticket" %}
             <div class="container border my-4 py-3">
@@ -37,17 +24,16 @@
                     <div class="row">
                         <div class="col">
                             {% include 'blog/partials/review_snippet.html' with review=instance %}
-                            
                             <div class="container border my-4 py-3">
                                 <div class="row">
                                     {% include 'blog/partials/ticket_snippet.html' with ticket=instance.ticket %}
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             {% endif %}
         {% endfor %}
     </section>
-</main>
 {% endblock content %}

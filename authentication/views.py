@@ -10,6 +10,8 @@ class LoginPageView(View):
     form_class = forms.LoginForm
 
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('home')
         form = self.form_class()
         message = ''
         return render(request, self.template_name, context={'form': form, 'message': message})

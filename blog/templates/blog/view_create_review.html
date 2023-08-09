@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% load blog_tools %}
+<main>
+    <section>
+        <h3 class="text-center">Créer une critique</h3>
+        <div class="container my-4">
+            <div class="row border">
+                <div class="col-8">
+                    <h4>{% user_display ticket.user %} demandé une critique</h4>
+                    <h4>{{ ticket.title }}</h4>
+                    <h4>{{ ticket.description }}</h4>
+                    {% if ticket.image %}
+                        <img src="{{ ticket.image.url }}" class="img-thumbnail" alt="book image" width="200" height="200">
+                    {% else %}
+                        <img src="{% static 'default_book_cover.jpg' %}" class="img-thumbnail" alt="book default image" width="200" height="200">
+                    {% endif %}
+
+                </div>
+                <div class="col-4 text-end">
+                    <h4>{{ ticket.date_created|show_date_of_ticket }}</h4>
+                </div>
+            </div>
+        
+            <div class="row border">
+                <div class="col">
+                    <h3>Critique</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for review in review_form %}
+                            <div class="my-3">
+                                {{ review.errors }}
+                                
+                                {% if review.name == "rating" %}
+                                    <div class="my-3">
+                                        {{ review.label_tag }}
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        
+                                        {% for choice in review %}
+                                        <label class="mx-5" for="{{ choice.choice_label }}">
+                                            {{ choice.choice_label }}
+                                            <span class="radio">{{ choice.tag }}</span>
+                                        </label>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ review.label_tag }} {{ review }}
+                                {% endif %}
+
+                            </div>
+                        {% endfor %}
+                        <div class="my-4 offset-11">
+                            <button type="submit" class="btn btn-primary">Envoyer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock content %}

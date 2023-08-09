@@ -1,0 +1,14 @@
+{% load static %}
+{% load blog_tools %}
+
+<div class="col-8">
+    <h4>{% user_display ticket.user %} demandé une critique</h4>
+    <h4>{{ ticket.title }}</h4>
+    <h4>{{ ticket.description }}</h4>
+    {% if ticket.image %}
+        <img src="{{ ticket.image.url }}" class="img-thumbnail" alt="book image" width="200" height="200">
+    {% else %}
+        <img src="{% static 'default_book_cover.jpg' %}" class="img-thumbnail" alt="book default image" width="200" height="200">
+    {% endif %}
+</div>
+

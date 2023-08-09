@@ -35,7 +35,11 @@ urlpatterns = [
 
     path('home/', blog.views.home, name='home'),
     path('create_user/', authentication.views.CreateUserView.as_view(), name='create_user'),
-    path('home/ticket_creation', blog.views.ticket_creation, name='ticket_creation'),
+    path('home/ask_review', blog.views.ask_review, name='ask_review'),
+    path('home/tickets/<int:ticket_id>', blog.views.view_show_ticket, name='view_show_ticket'),
+    path('home/tickets/view_create_ticket_and_review/', blog.views.view_create_ticket_and_review, name='view_create_ticket_and_review'),
+    path('home/tickets/<int:ticket_id>/create_review/', blog.views.view_create_review, name='view_create_review'),
+    path('home/flux', blog.views.show_flux, name='flux'),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<main>
+    <section>
+        <h3 class="text-center">Créer une critique</h3>
+        <div class="container my-4">
+            <form method="post" enctype="multipart/form-data">
+                <div class="row border">
+                    <div class="col">
+                        <h3>Livre / Article</h3>
+                        {% csrf_token %}
+                        {% for ticket in ticket_form %}
+                            <div class="my-3">
+                                {{ ticket.errors }}
+                                {{ ticket.label_tag }} {{ ticket }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row border">
+                    <div class="col">
+                        <h3>Critique</h3>
+                        {% csrf_token %}
+                        {% for review in review_form %}
+                            <div class="my-3">
+                                {{ review.errors }}
+                                
+                                {% if review.name == "rating" %}
+                                    <div class="my-3">
+                                        {{ review.label_tag }}
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        
+                                        {% for choice in review %}
+                                        <label class="mx-5" for="{{ choice.choice_label }}">
+                                            {{ choice.choice_label }}
+                                            <span class="radio">{{ choice.tag }}</span>
+                                        </label>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ review.label_tag }} {{ review }}
+                                {% endif %}
+
+                            </div>
+                        {% endfor %}
+                        <div class="my-4 offset-11">
+                            <button type="submit" class="btn btn-primary">Envoyer</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+{% endblock content %}
+
