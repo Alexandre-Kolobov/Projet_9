@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+<main>
+    <section>
+        <h2 class="text-center my-4">Suivre d'autres utilisateurs</h2>
+        <form method="post">
+            <div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-10">
+                            {% for field in form_add %}
+                                {% csrf_token %}
+                                <div>
+                                    {{ field }}
+                                </div>
+                                {% if field.errors %}
+                                    <div class="alert alert-danger d-flex align-items-center my-2   " role="alert">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                        </svg>
+                                        <div>
+                                            {% for error in field.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="col-2">
+                            <button type="submit" class="btn btn-primary">Envoyer</button>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+    <section>
+        <h2>Abonnements</h2>
+        
+        <form method="post">
+            {% for follow in following %}
+            {% csrf_token %}
+            {{ form_delete }}
+            <h4>{{ follow.followed_user }}</h4>
+
+            {% endfor %}
+            <div>
+                <button type="submit" class="btn btn-primary">test</button>
+            </div>
+        </form>
+        
+    </section>
+    <h2>User conntecté est suivi par:</h2>
+    {% for follower in followed_by %}
+        <h4>{{ follower.user  }}</h4>
+    {% endfor %}
+
+    <h2>List of users</h2>
+    {% for user in users %}
+        <h4>{{ user }}</h4>
+    {% endfor %}
+    
+    <h2>user contecté: {{ user }}</h2>
+
+</main>
+{% endblock content %}

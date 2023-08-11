@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import View
 
 from . import models
+from authentication import models as auth_models
 from . import forms
 from django.shortcuts import get_object_or_404
 from itertools import chain
@@ -77,21 +78,45 @@ def view_create_review(request, ticket_id):
     }
     return render(request, 'blog/view_create_review.html', context=context)
 
-
-@login_required
-def follow_users(request):
-    form = forms.FollowUsersForm(instance=request.user)
-    if request.method == 'POST':
-        form = forms.FollowUsersForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    return render(request, 'blog/follow_users_form.html', context={'form': form})
-
-
 @login_required
 def show_flux(request):
     tickets = models.Ticket.objects.filter(user=request.user)
     reviews = models.Review.objects.filter(user=request.user)
     tickets_and_reviews = sorted(chain(tickets, reviews), key=lambda instance: instance.date_created, reverse=True)
     return render(request, 'blog/flux.html', context={'tickets_and_reviews': tickets_and_reviews})
+
+
+@login_required
+def follow_users(request):
+
+    users = auth_models.User.objects.exclude(username=request.user)
+    form_add = forms.FollowUsersForm(instance=request.user, initial={'followers': ''})
+    form_delete = forms.DeleteFollower()
+    following = request.user.following.all()
+    followed_by = request.user.followed_by.all()
+
+    if request.method == 'POST':
+        if "add_follower" in request.POST:
+            form_add = forms.FollowUsersForm(request.POST, instance=request.user)
+            if form_add.is_valid():
+                follower_to_add = auth_models.User.objects.get(username=request.POST.get("followers"))
+                request.user.followers.add(follower_to_add)
+                return redirect('followers')
+            
+        if "delete_follower" in request.POST:
+            form_delete = forms.DeleteFollower()
+            print(request.POST)
+            if form_delete.is_valid():
+                follower_to_delet = auth_models.User.objects.get(username=request.POST.get("followers"))
+                request.user.followers.remove(follower_to_delet)
+                return redirect('followers')
+    
+    context ={
+        'form_add': form_add,
+        'form_delete': form_delete,
+        'users':users,
+        'following':following,
+        'followed_by':followed_by,
+        'user':request.user
+    }
+    return render(request, 'blog/followers.html', context=context)

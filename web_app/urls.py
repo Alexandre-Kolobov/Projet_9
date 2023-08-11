@@ -40,6 +40,7 @@ urlpatterns = [
     path('home/tickets/view_create_ticket_and_review/', blog.views.view_create_ticket_and_review, name='view_create_ticket_and_review'),
     path('home/tickets/<int:ticket_id>/create_review/', blog.views.view_create_review, name='view_create_review'),
     path('home/flux', blog.views.show_flux, name='flux'),
+    path('home/followers', blog.views.follow_users, name='followers'),
 ]
 
 if settings.DEBUG:

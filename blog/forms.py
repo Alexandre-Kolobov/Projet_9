@@ -30,3 +30,32 @@ class ReviewForm(forms.ModelForm):
             'rating': forms.RadioSelect(choices=CHOICES),
             'body': forms.Textarea(attrs={"rows":"5","class": "form-control"}),
                   }
+
+class FollowUsersForm(forms.ModelForm):
+    followers = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control", "placeholder":"Nom d'utilisateur"}))
+    add_follower = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+    class Meta:
+        model = get_user_model()
+        fields = ["followers"]
+
+    def clean_followers(self):
+
+        follower_username = self.cleaned_data['followers']
+
+        try:
+            follower = get_user_model().objects.get(username=follower_username)
+        except get_user_model().DoesNotExist:
+            raise forms.ValidationError("User does not exist")
+        
+        if follower_username == self.instance.username:
+            raise forms.ValidationError("You can't follow yourself")
+        
+        return follower.id
+    
+class DeleteFollower(forms.Form):
+    followers_id = forms.CharField()
+    delete_follower = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+
+    class Meta:
+        model = get_user_model()
+        fields = ["followers_id"]
