@@ -9,21 +9,29 @@
     </head>
     <body>
         <header>
-            <nav class="navbar navbar-expand bg-light border">
-                <div class="w-50 d-flex justify-content-end">
+            <nav class="navbar navbar-expand bg-light">
+                
+                <div class="w-25 d-flex justify-content-start">
+                    {% if user.is_authenticated %}
+                    <span class="navbar-brand px-3" >Bienvenue {{ user }}</span>
+                    {% endif %}
+                </div>
+                
+
+                <div class="w-25 d-flex justify-content-end">
                     <a class="navbar-brand" href="{% url 'home' %}">
                         <img src="{% static 'logo_2.png' %}" alt="logo" width="150" height="50">
                     </a>
                     
                 </div>
                 <div class="w-50 d-flex justify-content-end">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav px-3">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="{% url 'flux' %}">Flux</a>
+                                <a class="nav-link" aria-current="page" href="{% url 'home' %}">Flux</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="#">Post</a>
+                                <a class="nav-link" aria-current="page" href="{% url 'posts' %}">Post</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="{% url 'followers' %}">Abonnements</a>

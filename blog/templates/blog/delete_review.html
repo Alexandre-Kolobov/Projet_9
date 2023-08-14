@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<main>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col text-center m-5">
+                    <form method="post">
+                        {% csrf_token %}
+                        <p>Voulez vous supprimer votre critique: {{ object.headline }} ? </p>
+                        <div>                            
+                            <a href="{% url 'posts' %}" class="btn btn-primary">Revenir</a>
+                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                        </div> 
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}

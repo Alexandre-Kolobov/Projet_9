@@ -21,6 +21,7 @@ import blog.views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import (PasswordChangeView, PasswordChangeDoneView)
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,10 +37,15 @@ urlpatterns = [
     path('home/', blog.views.home, name='home'),
     path('create_user/', authentication.views.CreateUserView.as_view(), name='create_user'),
     path('home/ask_review', blog.views.ask_review, name='ask_review'),
-    path('home/tickets/<int:ticket_id>', blog.views.view_show_ticket, name='view_show_ticket'),
+    path('home/tickets/<int:pk>/update/', login_required(blog.views.UpdateTicket.as_view()), name='update_ticket'),
+    path('home/tickets/<int:pk>/delete/', login_required(blog.views.DeleteTicket.as_view()), name='delete_ticket'),
     path('home/tickets/view_create_ticket_and_review/', blog.views.view_create_ticket_and_review, name='view_create_ticket_and_review'),
+
+    path('home/review/<int:review_id>/update/', blog.views.update_ticket_and_review, name='update_ticket_and_review'),
+    path('home/review/<int:pk>/delete/', login_required(blog.views.DeleteReview.as_view()), name='delete_review'),
+   
     path('home/tickets/<int:ticket_id>/create_review/', blog.views.view_create_review, name='view_create_review'),
-    path('home/flux', blog.views.show_flux, name='flux'),
+    path('home/posts', blog.views.show_posts, name='posts'),
     path('home/followers', blog.views.follow_users, name='followers'),
 ]
 

@@ -14,8 +14,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col text-end">
-                        <a class="btn btn-primary mt-4" href="{% url 'view_create_review' instance.id %}" role="button" >Créer une critique</a>
+                    <div class="col d-block text-end">
+                        {% if not instance.review_set.all %}
+                            <a class="btn btn-primary mt-4" href="{% url 'view_create_review' instance.id %}" role="button" >Créer une critique</a>
+                        {% endif %}
+                        <a class="btn btn-primary mt-4" href="{% url 'update_ticket' instance.id %}" role="button" >Modifier</a>
+                        <a class="btn btn-danger mt-4" href="{% url 'delete_ticket' instance.id %}" role="button" >Supprimer</a>
                     </div>
                 </div>
             </div>
@@ -30,7 +34,12 @@
                                 </div>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row">
+                        <div class="col d-block text-end">
+                            <a class="btn btn-primary mt-4" href="{% url 'update_ticket_and_review' instance.id %}" role="button" >Modifier</a>
+                            <a class="btn btn-danger mt-4" href="{% url 'delete_review' instance.id %}" role="button" >Supprimer</a>
+                        </div>
                     </div>
                 </div>
             {% endif %}

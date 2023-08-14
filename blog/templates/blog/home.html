@@ -26,11 +26,13 @@
                         <h4>{{ instance.date_created|show_date_of_ticket }}</h4>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col text-end">
-                        <a class="btn btn-primary mt-4" href="{% url 'view_create_review' instance.id %}" role="button" >Créer une critique</a>
+                {% if not instance.review_set.all %}
+                    <div class="row">
+                        <div class="col text-end">
+                            <a class="btn btn-primary mt-4" href="{% url 'view_create_review' instance.id %}" role="button" >Créer une critique</a>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
             {% elif instance|model_type == 'Review' %}
                 <div class="container border my-4 py-3">

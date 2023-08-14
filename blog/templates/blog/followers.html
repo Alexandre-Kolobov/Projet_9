@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
 <main>
-    <section>
-        <h2 class="text-center my-4">Suivre d'autres utilisateurs</h2>
+    <section class="m-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-11">
+                    <h2 class="text-center my-4">Suivre d'autres utilisateurs</h2>
+                </div>
+            </div>
+        </div>
+        
         <form method="post">
             <div>
                 <div class="container">
                     <div class="row">
-                        <div class="col-10">
+                        <div class="col-8 offset-1">
                             {% for field in form_add %}
                                 {% csrf_token %}
                                 <div>
@@ -35,33 +42,147 @@
             </div>
         </form>
     </section>
-    <section>
-        <h2>Abonnements</h2>
-        
-        <form method="post">
-            {% for follow in following %}
-            {% csrf_token %}
-            {{ form_delete }}
-            <h4>{{ follow.followed_user }}</h4>
 
-            {% endfor %}
-            <div>
-                <button type="submit" class="btn btn-primary">test</button>
+    <section class="m-5">
+        {% if following %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-11">
+                        <hr class="text-primary"/>
+                        <h2 class="text-center mt-5">Abonnements</h2>
+                    </div>
+                </div>
             </div>
-        </form>
-        
-    </section>
-    <h2>User conntecté est suivi par:</h2>
-    {% for follower in followed_by %}
-        <h4>{{ follower.user  }}</h4>
-    {% endfor %}
 
-    <h2>List of users</h2>
-    {% for user in users %}
-        <h4>{{ user }}</h4>
-    {% endfor %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-11">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="w-75 text-center">Utilisateur</th>
+                                <th scope="col" class="text-center">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for follow in following %}
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <tr>
+                                            <td class="text-center">{{ follow.followed_user }}</td>
+                                            <input type="hidden" name="follower_to_remove" value="{{ follow.followed_user }}">
+                                            <td class="text-center"><button type="submit" class="btn btn-primary">Désabonner</button></td>
+                                            {{ form_delete }}
+                                        </tr>
+                                    </form>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-11">
+                        <hr class="text-primary"/>
+                        <h2 class="text-center mt-5">Abonnements</h2>
+                        <h4 class="text-center">Vous ne suivez personne</h4>
+                    </div>
+                </div>
+            </div>
+           
+        {% endif %}
+    </section>
+
+    <section class="m-5">        
+        {% if followed_by %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-11">
+                        <hr class="text-primary"/>
+                        <h2 class="text-center mt-5">Abonnés</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-11">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Utilisateur</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for follower in followed_by %}
+                                    <tr>
+                                        <td class="text-center">{{ follower.user }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-11">
+                        <hr class="text-primary"/>
+                        <h2 class="text-center mt-5">Abonnés</h2>
+                        <h4 class="text-center">Vous n'avez pas d'abonnés</h4>
+                    </div>
+                </div>
+            </div>
+            
+        {% endif %}
+    </section>
+
+    <section class="m-5">        
+        {% if followed_by %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-11">
+                        <hr class="text-primary"/>
+                        <h2 class="text-center mt-5">List d'utilisateurs</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-11">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Utilisateur</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <td class="text-center">{{ user }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-11">
+                        <hr class="text-primary"/>
+                        <h2 class="text-center mt-5">List d'utilisateurs</h2>
+                        <h4 class="text-center">Il n'y a pas d'autres utilisateur sur ce site</h4>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+
     
-    <h2>user contecté: {{ user }}</h2>
 
 </main>
 {% endblock content %}

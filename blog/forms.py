@@ -53,9 +53,6 @@ class FollowUsersForm(forms.ModelForm):
         return follower.id
     
 class DeleteFollower(forms.Form):
-    followers_id = forms.CharField()
     delete_follower = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
-    class Meta:
-        model = get_user_model()
-        fields = ["followers_id"]
+        
