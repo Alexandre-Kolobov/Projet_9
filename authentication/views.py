@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.views.generic import View
-from authentication.forms import CreateUserForm
-
+from django.contrib.auth.views import PasswordChangeView
 from . import forms
+
 
 class LoginPageView(View):
     template_name = 'authentication/login.html'
@@ -15,7 +15,7 @@ class LoginPageView(View):
         form = self.form_class()
         message = ''
         return render(request, self.template_name, context={'form': form, 'message': message})
-        
+
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -29,9 +29,11 @@ class LoginPageView(View):
         message = 'Identifiants invalides'
         return render(request, self.template_name, context={'form': form, 'message': message})
 
+
 def logout_user(request):
     logout(request)
     return redirect('login')
+
 
 class CreateUserView(View):
     form_class = forms.CreateUserForm
@@ -48,3 +50,8 @@ class CreateUserView(View):
             login(request, user)
             return redirect('home')
         return render(request, self.template_name, context={'form': form})
+
+
+class PasswordChangeView(PasswordChangeView):
+    form_class = forms.MyPasswordChangeForm
+    template_name = "authentication/change_password.html"

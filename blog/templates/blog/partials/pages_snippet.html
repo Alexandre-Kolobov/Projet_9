@@ -1,0 +1,29 @@
+<section>
+    {% if page_obj.paginator.num_pages != 1 %}
+        <div class="container my-4">
+            <div class="row">
+                <div class="col offset-6 text-center">
+                    <div class="container">
+                        <div class="row justify-content-end">
+                            <div class="col">
+                                {% if page_obj.has_previous %}
+                                    <a href="?page=1">« première</a>
+                                    <a href="?page={{ page_obj.previous_page_number }}">précédente</a>
+                                {% endif %}
+                            </div>
+                            <div class="col">
+                                Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}
+                            </div>
+                            <div class="col">
+                                {% if page_obj.has_next %}
+                                    <a href="?page={{ page_obj.next_page_number }}">suivante</a>
+                                    <a href="?page={{ page_obj.paginator.num_pages }}">dernière »</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</section>

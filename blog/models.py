@@ -1,3 +1,4 @@
+import os
 from django.conf import settings
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -13,13 +14,23 @@ class Ticket(models.Model):
     class Meta:
         ordering = ['-date_created']
 
+    def delete(self):
+        file_path = os.path.join(settings.MEDIA_ROOT, str(self.image))
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        return super().delete()
+
+
 class Review(models.Model):
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
-    rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)], verbose_name="Note")
+    rating = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)],
+        verbose_name="Note")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     headline = models.CharField(max_length=128, verbose_name="Titre")
     body = models.TextField(max_length=8192, verbose_name="Commentaire", blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
+
 
 class UserFollows(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="following")

@@ -4,36 +4,42 @@ from . import models
 from django.contrib.auth import get_user_model
 
 CHOICES = (
-    (1,"1"),
-    (2,"2"),
-    (3,"3"),
-    (4,"4"),
-    (5,"5")
+    (1, "1"),
+    (2, "2"),
+    (3, "3"),
+    (4, "4"),
+    (5, "5")
 )
+
 
 class TicketForm(forms.ModelForm):
     class Meta:
         model = models.Ticket
         fields = ['title', 'description', 'image']
         widgets = {
-            'title': forms.TextInput(attrs={"rows":"5","class": "form-control"}),
-            'description': forms.Textarea(attrs={"rows":"5","class": "form-control"}),
+            'title': forms.TextInput(attrs={"rows": "5", "class": "form-control"}),
+            'description': forms.Textarea(attrs={"rows": "5", "class": "form-control"}),
                   }
-    
-        
+
+
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = models.Review
         fields = ['headline', 'rating', 'body']
         widgets = {
-            'headline': forms.TextInput(attrs={"rows":"5","class": "form-control"}),
+            'headline': forms.TextInput(attrs={"rows": "5", "class": "form-control"}),
             'rating': forms.RadioSelect(choices=CHOICES),
-            'body': forms.Textarea(attrs={"rows":"5","class": "form-control"}),
+            'body': forms.Textarea(attrs={"rows": "5", "class": "form-control"}),
                   }
 
+
 class FollowUsersForm(forms.ModelForm):
-    followers = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control", "placeholder":"Nom d'utilisateur"}))
+    followers = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "form-control",
+        "placeholder": "Nom d'utilisateur"})
+        )
     add_follower = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+
     class Meta:
         model = get_user_model()
         fields = ["followers"]
@@ -46,13 +52,12 @@ class FollowUsersForm(forms.ModelForm):
             follower = get_user_model().objects.get(username=follower_username)
         except get_user_model().DoesNotExist:
             raise forms.ValidationError("User does not exist")
-        
+
         if follower_username == self.instance.username:
             raise forms.ValidationError("You can't follow yourself")
-        
+
         return follower.id
-    
+
+
 class DeleteFollower(forms.Form):
     delete_follower = forms.BooleanField(widget=forms.HiddenInput, initial=True)
-
-        
