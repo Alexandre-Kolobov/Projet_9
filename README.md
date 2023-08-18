@@ -20,3 +20,16 @@ How to generate and check an flake8 html report:
 	
 If you need to create a new super user please put in the commande line "python manage.py createsuperuser"
 If you need to use Django's shell please put in the commande line "python manage.py shell"
+
+Users pour demo:
+	Login (superuser): Alex
+	Mdp: 123456789
+	
+	Login: Claire
+	Mdp: Test1234!
+	
+	Login: Raphaël
+	Mdp: Test1234!
+	
+	Login: Thibault
+	Mdp: Test1234!
