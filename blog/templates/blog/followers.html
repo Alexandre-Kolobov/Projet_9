@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-11">
-                    <h2 class="text-center my-4">Suivre d'autres utilisateurs</h2>
+                    <h1 class="text-center my-4">Suivre d'autres utilisateurs</h1>
                 </div>
             </div>
         </div>
@@ -18,6 +18,9 @@
                             {% for field in form_add %}
                                 {% csrf_token %}
                                 <div>
+                                    {% if field.id_for_label != "id_add_follower" %}
+                                        <label class="visually-hidden" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {% endif %}
                                     {{ field }}
                                 </div>
                                 {% if field.errors %}
@@ -48,7 +51,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-11">
-                        <hr class="text-primary"/>
+                        <hr class="text-primary">
                         <h2 class="text-center mt-5">Abonnements</h2>
                     </div>
                 </div>
@@ -66,15 +69,17 @@
                             </thead>
                             <tbody>
                                 {% for follow in following %}
-                                    <form method="post">
-                                        {% csrf_token %}
-                                        <tr>
-                                            <td class="text-center">{{ follow.followed_user }}</td>
-                                            <input type="hidden" name="follower_to_remove" value="{{ follow.followed_user }}">
-                                            <td class="text-center"><button type="submit" class="btn btn-primary">Désabonner</button></td>
-                                            {{ form_delete }}
-                                        </tr>
-                                    </form>
+                                    <tr>
+                                        <td class="text-center">{{ follow.followed_user }}</td>
+                                        <td class="text-center">
+                                            <form method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="follower_to_remove" value="{{ follow.followed_user }}">
+                                                <button type="submit" class="btn btn-primary">Désabonner</button>
+                                                {{ form_delete }}
+                                            </form>
+                                        </td>
+                                    </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
@@ -85,9 +90,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-11">
-                        <hr class="text-primary"/>
+                        <hr class="text-primary">
                         <h2 class="text-center mt-5">Abonnements</h2>
-                        <h4 class="text-center">Vous ne suivez personne</h4>
+                        <p class="text-center">Vous ne suivez personne</p>
                     </div>
                 </div>
             </div>
@@ -100,7 +105,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-11">
-                        <hr class="text-primary"/>
+                        <hr class="text-primary">
                         <h2 class="text-center mt-5">Abonnés</h2>
                     </div>
                 </div>
@@ -129,9 +134,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-11">
-                        <hr class="text-primary"/>
+                        <hr class="text-primary">
                         <h2 class="text-center mt-5">Abonnés</h2>
-                        <h4 class="text-center">Vous n'avez pas d'abonnés</h4>
+                        <p class="text-center">Vous n'avez pas d'abonnés</p>
                     </div>
                 </div>
             </div>
@@ -144,7 +149,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-11">
-                        <hr class="text-primary"/>
+                        <hr class="text-primary">
                         <h2 class="text-center mt-5">List d'utilisateurs</h2>
                     </div>
                 </div>
@@ -173,9 +178,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-11">
-                        <hr class="text-primary"/>
+                        <hr class="text-primary">
                         <h2 class="text-center mt-5">List d'utilisateurs</h2>
-                        <h4 class="text-center">Il n'y a pas d'autres utilisateur sur ce site</h4>
+                        <p class="text-center">Il n'y a pas d'autres utilisateur sur ce site</p>
                     </div>
                 </div>
             </div>

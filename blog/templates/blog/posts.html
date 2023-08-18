@@ -3,9 +3,9 @@
 {% load static %}
 {% load blog_tools %}
 <main>
-    {% include 'blog/partials/pages_snippet.html' %}
     
-    <section>
+    
+    <section class="my-5">
         {% if not page_obj %}
             <div class="container">
                 <div class="row">
@@ -14,7 +14,16 @@
                     </div>
                 </div>
             </div> 
+        {% else %}
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <h1>Vos posts:</h1>
+                    </div>
+                </div>
+            </div> 
         {% endif %}
+        {% include 'blog/partials/pages_snippet.html' %}
         {% for instance in page_obj %}
             {% if instance|model_type == "Ticket" %}
             <div class="container border my-4 py-3">
@@ -61,4 +70,5 @@
         {% endfor %}
     </section>
     {% include 'blog/partials/pages_snippet.html' %}
+    </main>
 {% endblock content %}

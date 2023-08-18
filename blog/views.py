@@ -9,6 +9,12 @@ from django.db.models import Q
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
+from django.core.exceptions import PermissionDenied
+
+
+def check_author_error(request, exception=None):
+    message = exception.args[0]
+    return render(request, 'blog/check_author_error.html', status=403, context={"message": message})
 
 
 @login_required
@@ -52,11 +58,23 @@ class UpdateTicket(UpdateView):
     template_name = "blog/ask_review.html"
     success_url = reverse_lazy('posts')
 
+    def get_object(self, *args, **kwargs):
+        obj = super().get_object(*args, **kwargs)
+        if obj.user != self.request.user:
+            raise PermissionDenied("Vous n'avez pas de permissions pour éditer ce ticket")
+        return obj
+
 
 class DeleteTicket(DeleteView):
     model = models.Ticket
     template_name = "blog/delete_ticket.html"
     success_url = reverse_lazy('posts')
+
+    def get_object(self, *args, **kwargs):
+        obj = super().get_object(*args, **kwargs)
+        if obj.user != self.request.user:
+            raise PermissionDenied("Vous n'avez pas de permissions pour supprimer ce ticket")
+        return obj
 
 
 @login_required
@@ -108,8 +126,16 @@ def view_create_review(request, ticket_id):
 def update_ticket_and_review(request, review_id):
 
     review = models.Review.objects.get(id=review_id)
+
+    if review.user != request.user:
+        raise PermissionDenied("Vous n'avez pas de permissions pour éditer cette critique")
+
     review_form = forms.ReviewForm(instance=review)
     ticket = models.Ticket.objects.get(id=review.ticket.id)
+
+    if ticket.user != request.user:
+        raise PermissionDenied("Vous n'avez pas de permissions pour éditer ce ticket")
+
     ticket_form = forms.TicketForm(instance=ticket)
     if request.method == 'POST':
         review_form = forms.ReviewForm(request.POST, instance=review)
@@ -134,6 +160,10 @@ def update_ticket_and_review(request, review_id):
 @login_required
 def update_review(request, review_id):
     review = models.Review.objects.get(id=review_id)
+
+    if review.user != request.user:
+        raise PermissionDenied("Vous n'avez pas de permissions pour éditer cette critique")
+
     review_form = forms.ReviewForm(instance=review)
     ticket = models.Ticket.objects.get(id=review.ticket.id)
 
@@ -157,6 +187,12 @@ class DeleteReview(DeleteView):
     model = models.Review
     template_name = "blog/delete_review.html"
     success_url = reverse_lazy('posts')
+
+    def get_object(self, *args, **kwargs):
+        obj = super().get_object(*args, **kwargs)
+        if obj.user != self.request.user:
+            raise PermissionDenied("Vous n'avez pas de permissions pour supprimer cette critique")
+        return obj
 
 
 @login_required

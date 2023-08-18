@@ -23,6 +23,8 @@ from django.conf.urls.static import static
 from django.contrib.auth.views import PasswordChangeDoneView
 from django.contrib.auth.decorators import login_required
 
+handler403 = 'blog.views.check_author_error'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', authentication.views.LoginPageView.as_view(), name='login'),

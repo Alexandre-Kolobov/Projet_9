@@ -2,13 +2,13 @@
 {% load blog_tools %}
 
 <div class="col-8">
-    <h4>{% user_display ticket.user %} demandé une critique</h4>
-    <h4>{{ ticket.title }}</h4>
-    <h4>{{ ticket.description }}</h4>
+    <p>{% user_display ticket.user %} demandé une critique</p>
+    <h2>{{ ticket.title }}</h2>
+    <h3>{{ ticket.description }}</h3>
     {% if ticket.image %}
-        <img src="{{ ticket.image.url }}" class="img-thumbnail" alt="book image" width="200" height="200">
+        <img src="{{ ticket.image.url }}" class="img-thumbnail" alt="Cover" width="250" height="250">
     {% else %}
-        <img src="{% static 'default_book_cover.jpg' %}" class="img-thumbnail" alt="book default image" width="200" height="200">
+        <img src="{% static 'default_book_cover.jpg' %}" class="img-thumbnail" alt="Default cover" width="200" height="200">
     {% endif %}
 </div>
 

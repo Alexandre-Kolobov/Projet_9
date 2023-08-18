@@ -2,65 +2,65 @@
 {% load blog_tools %}
 
 
-<div class="contain">
+<div class="container">
     <div class="row">
         <div class="col-8">
-            <h4>{% user_display review.user %} publié une critique</h4>
+            <p>{% user_display review.user %} publié une critique</p>
         </div>
 
         <div class="col-4 text-end">
-            <h4>{{ instance.date_created|show_date_of_ticket }}</h4>
+            <p>{{ instance.date_created|show_date_of_ticket }}</p>
         </div>
 
         {% if review.rating == 0 %}
-            <h4>{{ review.headline }} - 
+            <h2>{{ review.headline }} - 
                 <i class="bi bi-star"></i>
                 <i class="bi bi-star"></i>
                 <i class="bi bi-star"></i>
                 <i class="bi bi-star"></i>
                 <i class="bi bi-star"></i>
-            </h4>
+            </h2>
         {% elif review.rating == 1 %}
-            <h4>{{ review.headline }} - 
+            <h2>{{ review.headline }} - 
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star"></i>
                 <i class="bi bi-star"></i>
                 <i class="bi bi-star"></i>
                 <i class="bi bi-star"></i>
-            </h4>
+            </h2>
         {% elif review.rating == 2 %}
-            <h4>{{ review.headline }} - 
+            <h2>{{ review.headline }} - 
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star"></i>
                 <i class="bi bi-star"></i>
                 <i class="bi bi-star"></i>
-            </h4>
+            </h2>
         {% elif review.rating == 3 %}
-            <h4>{{ review.headline }} - 
+            <h2>{{ review.headline }} - 
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star"></i>
                 <i class="bi bi-star"></i>
-            </h4>
+            </h2>
         {% elif instance.rating == 4 %}
-            <h4>{{ instance.headline }} - 
+            <h2>{{ instance.headline }} - 
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star"></i>
-            </h4>
+            </h2>
         {% elif review.rating == 5 %}
-            <h4>{{ review.headline }} - 
+            <h2>{{ review.headline }} - 
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
-            </h4>
+            </h2>
         {% endif %}
-        <h4>{{ review.body }}</h4>
+        <h3>{{ review.body }}</h3>
     </div>
 </div>

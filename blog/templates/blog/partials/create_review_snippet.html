@@ -1,0 +1,33 @@
+{% load static %}
+{% load blog_tools %}
+
+{% csrf_token %}
+{% for review in review_form %}
+    <div class="my-3">
+        {{ review.errors }}
+        
+        {% if review.name == "rating" %}
+            <div class="my-3">
+                <p>{{ review.label }} :</p>
+            </div>
+            <div class="form-check form-check-inline">
+                
+                {% for choice in review %}
+                <span class="radio">
+                    <!-- <input type="radio" id="{{ choice.choice_label }}" name="review_choice"> -->
+                    <label class="mx-5">
+                        {{ choice.choice_label }}
+                        {{ choice.tag }}
+                    </label>
+                </span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ review.label_tag }} {{ review }}
+        {% endif %}
+
+    </div>
+{% endfor %}
+<div class="my-4 offset-11">
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+</div>

@@ -6,7 +6,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <h2 class="text-center my-4">Inscrivez-vous</h2>
+                        <h1 class="text-center my-4">Inscrivez-vous</h1>
                         <form method="post">
                             <div class="container">
                                 <div class="row">
@@ -16,7 +16,7 @@
                                         {% for field in form %}
                                             <p class="form-floating">
                                                 {{ field }}
-                                                <label for="floatingInput">{{field.label}}</label>
+                                                <label for="{{ field.id_for_label }}">{{field.label}}</label>
                                             </p>
                                             <div class="text-danger">
                                                 {{ field.errors }}

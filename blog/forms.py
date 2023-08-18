@@ -17,7 +17,7 @@ class TicketForm(forms.ModelForm):
         model = models.Ticket
         fields = ['title', 'description', 'image']
         widgets = {
-            'title': forms.TextInput(attrs={"rows": "5", "class": "form-control"}),
+            'title': forms.TextInput(attrs={"class": "form-control"}),
             'description': forms.Textarea(attrs={"rows": "5", "class": "form-control"}),
                   }
 
@@ -27,7 +27,7 @@ class ReviewForm(forms.ModelForm):
         model = models.Review
         fields = ['headline', 'rating', 'body']
         widgets = {
-            'headline': forms.TextInput(attrs={"rows": "5", "class": "form-control"}),
+            'headline': forms.TextInput(attrs={"class": "form-control"}),
             'rating': forms.RadioSelect(choices=CHOICES),
             'body': forms.Textarea(attrs={"rows": "5", "class": "form-control"}),
                   }
@@ -51,10 +51,13 @@ class FollowUsersForm(forms.ModelForm):
         try:
             follower = get_user_model().objects.get(username=follower_username)
         except get_user_model().DoesNotExist:
-            raise forms.ValidationError("User does not exist")
+            raise forms.ValidationError("Cet utilisateur n'existe pas")
 
         if follower_username == self.instance.username:
-            raise forms.ValidationError("You can't follow yourself")
+            raise forms.ValidationError("Vous ne pouvez pas suivre vous-même")
+
+        if self.instance.following.filter(followed_user__username=follower_username).exists():
+            raise forms.ValidationError("Vous suivez déja cet utilisateur")
 
         return follower.id
 

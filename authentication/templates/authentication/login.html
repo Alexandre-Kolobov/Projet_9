@@ -6,11 +6,11 @@
         <div class="container">
             <div class="row">
                 <div class="col text-center">
-                    <h2 class="mt-5 mb-3">Inscrivez-vous maintenant</h2>
+                    <h1 class="mt-5 mb-3">Inscrivez-vous maintenant</h1>
                     <a class="btn btn-primary" href="{% url 'create_user' %}" role="button" >S'inscrire</a>
                 </div>
                 <div class="col">
-                    <h2 class="text-center my-4">Connectez-vous</h2>
+                    <h1 class="text-center my-4">Connectez-vous</h1>
                     <form method="post">
                         <div class="container">
                             <div class="row">
@@ -28,6 +28,7 @@
                                     {% endif %}
 
                                     {% for field in form %}
+                                        <label for="{{ field.id_for_label }}" class="visually-hidden">{{ field.label }}</label>
                                         <p>{{ field }}</p>
                                     {% endfor %}
                                 </div>

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<main>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col text-center m-5">
+                    <h1 class="my-5">{{message}} </h1>
+                    <div>                            
+                        <a href="{% url 'home' %}" class="btn btn-primary">Revenir</a>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}

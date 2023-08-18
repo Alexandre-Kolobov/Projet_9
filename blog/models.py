@@ -15,9 +15,10 @@ class Ticket(models.Model):
         ordering = ['-date_created']
 
     def delete(self):
-        file_path = os.path.join(settings.MEDIA_ROOT, str(self.image))
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        if self.image:
+            file_path = os.path.join(settings.MEDIA_ROOT, str(self.image))
+            if os.path.exists(file_path):
+                os.remove(file_path)
         return super().delete()
 
 

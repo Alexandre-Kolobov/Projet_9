@@ -3,7 +3,7 @@
 {% load static %}
 {% load blog_tools %}
 <main>
-    <section>
+    <div>
         <div class="container my-5">
             <div class="row">
                 <div class="col-6 text-end">
@@ -14,26 +14,37 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    {% include 'blog/partials/pages_snippet.html' %}
+    
     <section>
         {% if not page_obj %}
             <div class="container">
                 <div class="row">
                     <div class="col text-center">
-                        <h2>Vous n'avez pas de flux</h2>
+                        <h1>Vous n'avez pas de flux</h1>
+                    </div>
+                </div>
+            </div> 
+        {% else %}
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <h1>Votre flux:</h1>
                     </div>
                 </div>
             </div> 
         {% endif %}
+        {% include 'blog/partials/pages_snippet.html' %}
+    </section>
+    <section>
         {% for instance in page_obj %}
             {% if instance|model_type == "Ticket" %}
             <div class="container border my-4 py-3">
                 <div class="row">
                     {% include 'blog/partials/ticket_snippet.html' with ticket=instance %}
                     <div class="col-4 text-end">
-                        <h4>{{ instance.date_created|show_date_of_ticket }}</h4>
+                        <p>{{ instance.date_created|show_date_of_ticket }}</p>
                     </div>
                 </div>
                 {% if not instance.review_set.all %}
