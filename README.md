@@ -22,6 +22,7 @@ If you need to create a new super user please put in the commande line "python m
 If you need to use Django's shell please put in the commande line "python manage.py shell"
 
 Users pour demo:
+
 	Login (superuser): Alex
 	Mdp: 123456789
 	
