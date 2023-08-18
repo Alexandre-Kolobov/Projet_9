@@ -20,6 +20,7 @@ How to generate and check an flake8 html report:
 	
 If you need to create a new super user please put in the commande line "python manage.py createsuperuser"
 If you need to use Django's shell please put in the commande line "python manage.py shell"
+If you need to remove all data from database please put in the commande line "python manage.py flush"
 
 Users pour demo:
 
