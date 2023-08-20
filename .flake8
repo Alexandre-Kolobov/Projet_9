@@ -1,0 +1,11 @@
+[flake8]
+max-line-length = 120
+exclude =
+    .git,
+    data,
+    venv,
+	flake8-report
+	authentication/migrations
+	authentication/tests.py
+	blog/migrations
+	blog/tests.py
