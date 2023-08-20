@@ -6,7 +6,7 @@ This application was created to host a book blog.
 
 How to run the program:
 
-	1) Place your command line in /YOUR_FOLDER and then "git clone https://github.com/Alexandre-Kolobov/Projet_9.git"
+	1)Place your command line in /YOUR_FOLDER and then "git clone https://github.com/Alexandre-Kolobov/Projet_9.git"
 	
 	2)In the folder make "pip install -r requirements.txt" to set up the right configuration
 	
@@ -20,6 +20,7 @@ How to generate and check an flake8 html report:
 	
 If you need to create a new super user please put in the commande line "python manage.py createsuperuser"
 If you need to use Django's shell please put in the commande line "python manage.py shell"
+If you need to remove all data from database please put in the commande line "python manage.py flush"
 
 Users pour demo:
 	Login (superuser): Alex

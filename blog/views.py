@@ -27,11 +27,31 @@ def home(request):
         )
     tickets_and_reviews = sorted(chain(tickets, reviews), key=lambda instance: instance.date_created, reverse=True)
 
-    paginator = Paginator(tickets_and_reviews, 4)
+    paginator = Paginator(tickets_and_reviews, 2)
 
-    page_number = request.GET.get('page')
+    page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
-    context = {'page_obj': page_obj}
+
+    if paginator.num_pages >= 3:
+
+        if page_obj.has_next() and page_obj.has_previous():
+            pages_to_show = [int(page_number)-1, int(page_number), int(page_number)+1]
+
+        elif page_obj.has_next() is True and page_obj.has_previous() is False:
+            pages_to_show = [int(page_number), int(page_number)+1, int(page_number)+2]
+
+        elif page_obj.has_next() is False and page_obj.has_previous() is True:
+            pages_to_show = [int(page_number)-2, int(page_number)-1, int(page_number)]
+    elif paginator.num_pages == 2:
+        if page_obj.has_next() is True and page_obj.has_previous() is False:
+            pages_to_show = [int(page_number), int(page_number)+1]
+
+        elif page_obj.has_next() is False and page_obj.has_previous() is True:
+            pages_to_show = [int(page_number)-1, int(page_number)]
+    else:
+        pages_to_show = [1]
+
+    context = {'page_obj': page_obj, 'pages_to_show': pages_to_show}
     return render(request, 'blog/home.html', context=context)
 
     # return render(request, 'blog/home.html', context={'tickets_and_reviews': tickets_and_reviews})
@@ -201,10 +221,30 @@ def show_posts(request):
     reviews = models.Review.objects.filter(user=request.user)
     tickets_and_reviews = sorted(chain(tickets, reviews), key=lambda instance: instance.date_created, reverse=True)
 
-    paginator = Paginator(tickets_and_reviews, 4)
-    page_number = request.GET.get('page')
+    paginator = Paginator(tickets_and_reviews, 2)
+    page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
-    context = {'page_obj': page_obj}
+
+    if paginator.num_pages >= 3:
+
+        if page_obj.has_next() and page_obj.has_previous():
+            pages_to_show = [int(page_number)-1, int(page_number), int(page_number)+1]
+
+        elif page_obj.has_next() is True and page_obj.has_previous() is False:
+            pages_to_show = [int(page_number), int(page_number)+1, int(page_number)+2]
+
+        elif page_obj.has_next() is False and page_obj.has_previous() is True:
+            pages_to_show = [int(page_number)-2, int(page_number)-1, int(page_number)]
+    elif paginator.num_pages == 2:
+        if page_obj.has_next() is True and page_obj.has_previous() is False:
+            pages_to_show = [int(page_number), int(page_number)+1]
+
+        elif page_obj.has_next() is False and page_obj.has_previous() is True:
+            pages_to_show = [int(page_number)-1, int(page_number)]
+    else:
+        pages_to_show = [1]
+
+    context = {'page_obj': page_obj, 'pages_to_show': pages_to_show}
     return render(request, 'blog/posts.html', context=context)
 
 
