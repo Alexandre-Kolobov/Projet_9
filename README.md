@@ -23,6 +23,7 @@ If you need to use Django's shell please put in the commande line "python manage
 If you need to remove all data from database please put in the commande line "python manage.py flush"
 
 Users pour demo:
+
 	Login (superuser): Alex
 	Mdp: 123456789
 	
