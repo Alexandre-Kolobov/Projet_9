@@ -5,6 +5,7 @@ Project Description:
 This application was created to host a book blog.
 
 How to run the program:
+
 	1)To set up the virtual environment, please make sure that you have a python version higher that 3.3 (in prompt: python --version) because you need to have the pip installer.
 
 	2)You have to create a folder ( /YOUR_FOLDER) and go in with the command line. In command line plese make "python -m venv venv" to create the virtual envrinment named "venv".
