@@ -5,14 +5,19 @@ Project Description:
 This application was created to host a book blog.
 
 How to run the program:
+	1)To set up the virtual environment, please make sure that you have a python version higher that 3.3 (in prompt: python --version) because you need to have the pip installer.
 
-	1)Please use a virtual environment 
+	2)You have to create a folder ( /YOUR_FOLDER) and go in with the command line. In command line plese make "python -m venv venv" to create the virtual envrinment named "venv".
+
+	3)To activate venv, via command line:
+		For Windows: venv/Scripts/Activate.ps1 (with powershell) or use commande "source Scripts/activate" (if you use bash)
+		For Linux: venv/bin/activate
  
-	2)Place your command line in /YOUR_FOLDER and then "git clone https://github.com/Alexandre-Kolobov/Projet_9.git"
+	4)Place your command line in /YOUR_FOLDER and then "git clone https://github.com/Alexandre-Kolobov/Projet_9.git"
 	
-	3)In the folder make "pip install -r requirements.txt" to set up the right configuration
+	5)In the folder make "pip install -r requirements.txt" to set up the right configuration
 	
-	4)Now you are ready to launch the web app. In the commande line go to /YOUR_FOLDER and make "python manage.py runserver".
+	6)Now you are ready to launch the web app. In the commande line go to /YOUR_FOLDER and make "python manage.py runserver".
 	
 	
 Users for demo:
